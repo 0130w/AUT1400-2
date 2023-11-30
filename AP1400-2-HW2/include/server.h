@@ -1,10 +1,11 @@
 #ifndef SERVER_H
 #define SERVER_H
 #include <iostream>
-#include <client.h>
 #include <map>
 
 class Client;
+
+inline std::vector<std::string> pending_trxs;
 
 class Server
 {
@@ -24,7 +25,7 @@ class Server
          * @param id 
          * @return std::shared_ptr<Client> 
          */
-        std::shared_ptr<Client> get_client(std::string id);
+        std::shared_ptr<Client> get_client(std::string id) const;
         /**
          * @param id 
          * @return the wallet value of the client with username id
@@ -34,13 +35,13 @@ class Server
          * @brief parse the transaction shown as "sender-receiver-value"
          * @throw if string is not standard, throw a runtime error 
          */
-        bool parse_trx(std::string trx, std::string sender, std::string receiver, double value);
+        static bool parse_trx(std::string trx, std::string& sender, std::string& receiver, double& value);
         /**
          * @brief add a pending transaction
          * only accepting a pending transaction by authenticating the sender's signature
          * and if he has enough money.
          */
-        bool add_pending_trx(std::string trx, std::string signature);
+        bool add_pending_trx(std::string trx, std::string signature) const;
 
         size_t mine();
     private:

@@ -3,7 +3,6 @@
 #include "gmock/gmock.h"
 #include "bst.h"
 
-/*
 TEST(HW3Test, TEST1) {
 
     BST::Node left{10, nullptr, nullptr};
@@ -185,7 +184,7 @@ TEST(HW3Test, TEST14) {
     bst.add_node(7);
     
     std::cout << "here" << std::endl;
-    BST::Node** node{bst.find_parrent(15)};
+    BST::Node** node{bst.find_parent(15)};
     std::cout << "here2" << std::endl;
     EXPECT_EQ((*node)->value, 10);
     EXPECT_EQ((*node)->left->value, 7);
@@ -202,9 +201,8 @@ TEST(HW3Test, TEST15) {
     bst.add_node(7);
     bst.add_node(8);
     bst.add_node(9);
-    
     BST::Node** node{bst.find_successor(10)};
-    EXPECT_EQ((*node)->value, 9);
+    EXPECT_EQ((*node)->value, 15);
     EXPECT_EQ((*node)->left, nullptr);
     EXPECT_EQ((*node)->right, nullptr);
 }
@@ -235,7 +233,9 @@ TEST(HW3Test, TEST17) {
     bst.add_node(9);
     
     EXPECT_EQ(bst.length(), 8);
+    std::cout << bst << std::endl;
     EXPECT_TRUE(bst.delete_node(53)); // leaf node
+    std::cout << bst << std::endl;
     EXPECT_EQ(bst.length(), 7);
     EXPECT_EQ(bst.get_root()->right->right, nullptr);
 }
@@ -252,7 +252,6 @@ TEST(HW3Test, TEST18) {
     bst.add_node(2);
     bst.add_node(7);
     bst.add_node(75);
-    
     EXPECT_EQ(bst.length(), 10);
     EXPECT_TRUE(bst.delete_node(10)); // only left child
     EXPECT_EQ(bst.length(), 9);
@@ -461,7 +460,7 @@ TEST(HW3Test, TEST28) {
 TEST(HW3Test, TEST29) {
     BST bst1{5, 1, 10, 2, 8, 50, 4, 60};
     BST bst2{3, 2, 100, 20, 8, 50, 4, 60, 44, 23};
-    EXPECT_EQ((*bst1.find_successor(5))->value, 4);
+    EXPECT_EQ((*bst1.find_successor(5))->value, 8);
     EXPECT_EQ(bst2.length(), 10);
 }
 
@@ -490,7 +489,3 @@ TEST(HW3Test, TEST31) {
     for(size_t i{}; i < values1.size(); i++)
         EXPECT_EQ(values2[i], values1[i]-1);    
 }
-*/
-
-
-

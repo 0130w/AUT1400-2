@@ -7,7 +7,7 @@ class BST {
 
     public:
         BST(std::initializer_list<int> list);
-        BST(const BST &other);
+        BST(BST &other);
         BST(BST &&other);
         ~BST();
         class Node
@@ -35,7 +35,7 @@ class BST {
         Node** find_parent(int value);
         Node** find_successor(int value);
         bool delete_node(int value);
-        BST& operator=(const BST& other);
+        BST& operator=(BST& other);
         BST& operator=(BST&& other);
         BST& operator++();
         BST operator++(int);

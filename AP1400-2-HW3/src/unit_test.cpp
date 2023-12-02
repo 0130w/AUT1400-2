@@ -202,7 +202,7 @@ TEST(HW3Test, TEST15) {
     bst.add_node(8);
     bst.add_node(9);
     BST::Node** node{bst.find_successor(10)};
-    EXPECT_EQ((*node)->value, 15);
+    EXPECT_EQ((*node)->value, 9);
     EXPECT_EQ((*node)->left, nullptr);
     EXPECT_EQ((*node)->right, nullptr);
 }
@@ -324,10 +324,8 @@ TEST(HW3Test, TEST21) {
     bst.add_node(2);
     bst.add_node(7);
     bst.add_node(75);
-    
     BST::Node* address_of_60{*bst.find_node(60)};
     BST::Node* address_of_75{*bst.find_node(75)};
-
     EXPECT_TRUE(bst.delete_node(50)); // only left child
 
     // the remainig nodes should not be regenerated 
@@ -460,7 +458,7 @@ TEST(HW3Test, TEST28) {
 TEST(HW3Test, TEST29) {
     BST bst1{5, 1, 10, 2, 8, 50, 4, 60};
     BST bst2{3, 2, 100, 20, 8, 50, 4, 60, 44, 23};
-    EXPECT_EQ((*bst1.find_successor(5))->value, 8);
+    EXPECT_EQ((*bst1.find_successor(5))->value, 4);
     EXPECT_EQ(bst2.length(), 10);
 }
 

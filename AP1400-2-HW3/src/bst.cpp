@@ -9,15 +9,21 @@ BST::BST(std::initializer_list<int> list) : root(nullptr) {
         add_node(value);
     }
 }
-BST::BST(const BST &bst) : root(bst.root) {}
+BST::BST(BST &bst) {
+    std::vector<Node*> nodes;
+    bst.bfs([&nodes](Node*& node) { nodes.push_back(node); });
+    for(auto node : nodes) { this->add_node(node->value); }
+}
 BST::BST(BST &&bst) : root(std::exchange(bst.root, nullptr)) {}
 BST::~BST() {
     std::vector<Node*> nodes;
     bfs([&nodes](Node*& node) {nodes.push_back(node); });
     for(auto &node: nodes) { delete node; }
 }
-BST& BST::operator=(const BST& other) {
-    root = other.root;
+BST& BST::operator=(BST& other) {
+    std::vector<Node*> nodes;
+    other.bfs([&nodes](Node*& node) { nodes.push_back(node); });
+    for(auto node : nodes) { this->add_node(node->value); }
     return *this;
 }
 BST& BST::operator=(BST&& other) {
@@ -110,12 +116,12 @@ BST::Node** BST::find_successor(int value) {
     auto node = find_node(value);
     if(node == nullptr) return nullptr;
     Node** result = nullptr;
-    if((*node)->right == nullptr) {
+    if((*node)->left == nullptr) {
         return find_parent(value);
     } else {
-        result = &((*node)->right);
-        while((*result)->left) {
-            result = &((*result)->left);
+        result = &((*node)->left);
+        while((*result)->right) {
+            result = &((*result)->right);
         }
     }
     return result;
@@ -124,7 +130,6 @@ BST::Node** BST::find_successor(int value) {
 bool BST::delete_node(int value) {
     Node** node = find_node(value);
     Node** parent = find_parent(value);
-
     if(!node) { return false; }
 
     Node* delete_node = *node;
@@ -154,9 +159,9 @@ bool BST::delete_node(int value) {
         // 两个节点都存在
         Node** successor = find_successor(value);
         // 肯定能找得到successor，而且肯定是在右子树上面
+        Node** successor_parent = find_parent((*successor)->value);
         std::swap((*successor)->value, delete_node->value);
         // 接下来只需要考虑怎么删除successor
-        Node** successor_parent = find_parent((*successor)->value);
         if((*successor_parent)->left && (*successor_parent)->left->value == value) {
             (*successor_parent)->left = nullptr;
         } else {

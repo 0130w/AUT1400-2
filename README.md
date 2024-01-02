@@ -1,5 +1,5 @@
-# AP1400-2
-my solution of AP1400-2
+# AUT1400-2
+my solution of AUT1400-2
 
 - [x] HW1
 - [x] HW2
